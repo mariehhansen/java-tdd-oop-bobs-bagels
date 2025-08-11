@@ -10,27 +10,28 @@ public class CoreTest {
     // GUEST
     @Test
     public void shouldAddToBasket() {
-        Basket b = new Basket(2);
+        Guest g = new Guest("Gio");
         Bagel bg = new Bagel("A", 20, "Aa", "Ab");
-        b.add(bg);
-        Assertions.assertTrue(b.getItems().containsKey(bg));
+        g.addToBasket(bg);
+        Assertions.assertTrue(g.getBasket().getItems().containsKey(bg));
     }
 
     @Test
     public void shouldRemoveFromBasket() {
-        Basket b = new Basket(2);
+        Guest g = new Guest("Gio");
         Bagel bg = new Bagel("A", 20, "Aa", "Ab");
-        b.add(bg);
-        b.remove(bg.getSKU());
-        Assertions.assertFalse(b.getItems().containsKey(bg));
+        g.removeFromBasket(bg);
+        Assertions.assertFalse(g.getBasket().getItems().containsKey(bg));
     }
 
     @Test
     public void shouldBeFull() {
-        Basket b = new Basket(2);
-        b.add(new Bagel("A", 20, "Aa", "Ab"));
-        b.add(new Bagel("B", 20, "Bb", "Bc"));
-        Assertions.assertTrue(b.isFull());
+        Guest g = new Guest("Gio");
+        Manager m = new Manager();
+        m.setCapacity(g.getBasket(), 2);
+        g.addToBasket(new Bagel("A", 20, "Aa", "Ab"));
+        g.addToBasket(new Bagel("B", 20, "Bb", "Bc"));
+        Assertions.assertTrue(g.getBasket().isFull());
     }
 
     @Test
@@ -38,7 +39,8 @@ public class CoreTest {
         Basket b = new Basket(2);
         b.add(new Bagel("A", 20, "Aa", "Ab"));
         b.add(new Bagel("B", 20, "Bb", "Bc"));
-        Assertions.assertFalse(b.remove("C"));
+        Item c = new Bagel("C", 100, "Cc", "Cd");
+        Assertions.assertFalse(b.remove(c));
     }
 
     // CUSTOMER
@@ -49,7 +51,7 @@ public class CoreTest {
         Bagel b = new Bagel("B", 20, "Bb", "Bc");
         c.getBasket().add(a);
         c.getBasket().add(b);
-        Assertions.assertEquals(a.getPrice()+b.getPrice(), c.getBasket().getTotalCost());
+        Assertions.assertEquals(a.getPrice()+b.getPrice(), c.getTotalPriceBasket());
     }
 
     @Test
@@ -117,6 +119,15 @@ public class CoreTest {
         Assertions.assertEquals("Fg", f.getVariant());
     }
 
+    @Test
+    public void getPriceBagelWithFilling() {
+        Bagel b = new Bagel("B", 20, "Aa", "Ab");
+        Filling f1 = new Filling("F", 10, "Ff", "Fg");
+        Filling f2 = new Filling("F", 10, "Ff", "Fg");
+        b.addFilling(f1); b.addFilling(f2);
+        Assertions.assertEquals(40, b.getPriceWithFillings());
+    }
+
     // MANAGER
     @Test
     public void shouldSetNewCapacity() {
@@ -142,13 +153,24 @@ public class CoreTest {
 
     // BASKET
     @Test
+    public void shouldNotBeFull() {
+        Basket bas = new Basket(10);
+        Assertions.assertFalse(bas.isFull());
+        Item b = new Bagel("B", 20, "Aa", "Ab");
+        Coffee c = new Coffee("C", 30, "Cc", "Cd");
+        Filling f = new Filling("F", 10, "Ff", "Fg");
+        bas.add(b); bas.add(c); bas.add(f);
+        Assertions.assertFalse(bas.isFull());
+    }
+    @Test
     public void shouldAdd() {
         Basket bas = new Basket(10);
         Item b = new Bagel("B", 20, "Aa", "Ab");
         Coffee c = new Coffee("C", 30, "Cc", "Cd");
         Filling f = new Filling("F", 10, "Ff", "Fg");
-        Assertions.assertTrue(bas.add(b));
-        bas.add(b); bas.add(c); bas.add(f);
+        bas.add(b);
+        bas.add(c);
+        bas.add(f);
         Assertions.assertEquals(3, bas.getItems().size());
     }
 
@@ -159,7 +181,7 @@ public class CoreTest {
         Coffee c = new Coffee("C", 30, "Cc", "Cd");
         Filling f = new Filling("F", 10, "Ff", "Fg");
         bas.add(b); bas.add(c); bas.add(f);
-        bas.remove("C");
+        bas.remove(c);
         Assertions.assertEquals(2, bas.getItems().size());
     }
 
@@ -180,16 +202,5 @@ public class CoreTest {
         Manager m = new Manager();
         m.setCapacity(bas, 100);
         Assertions.assertEquals(100, bas.getCapacity());
-    }
-
-    @Test
-    public void shouldGetAvailableCap() {
-        Basket bas = new Basket(10);
-        Item b = new Bagel("B", 20, "Aa", "Ab");
-        bas.add(b);
-        Assertions.assertEquals(9, bas.getAvailableCapacity());
-        Manager m = new Manager();
-        m.setCapacity(bas, 100);
-        Assertions.assertEquals(99, bas.getAvailableCapacity());
     }
 }

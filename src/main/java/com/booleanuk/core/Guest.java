@@ -12,22 +12,22 @@ public class Guest {
     }
 
     public Basket getBasket() {
-        return null;
+        return this.basket;
     }
 
-    public boolean addToBasket(Item it) {
-        return false;
+    public boolean addToBasket(Item item) {
+        return this.basket.add(item);
     }
 
-    public boolean removeFromBasket(Item it) {
-        return false;
+    public boolean removeFromBasket(Item item) {
+        return this.basket.remove(item);
     }
 
-    public boolean isBasketFull() {
-        return false;
+    public boolean guestBasketIsFull() {
+        return this.basket.isFull();
     }
 
-    public boolean hasItemInBasket(Item it) {
-        return false;
+    public boolean hasItemInBasket(Item item) {
+        return this.basket.getItems().containsKey(item);
     }
 }

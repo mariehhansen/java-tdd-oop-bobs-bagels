@@ -13,14 +13,20 @@ public class Bagel extends Item {
     }
 
     public boolean addFilling(Filling f) {
-        return false;
+        // make void? or keep boolean and set max number of fillings?
+        fillingList.add(f);
+        return true;
     }
 
     public List<Filling> getFillingList() {
-        return null;
+        return this.fillingList;
     }
 
     public float getPriceWithFillings() {
-        return 0;
+        float updatedPrice = this.getPrice();
+        for (Filling f : this.getFillingList()) {
+            updatedPrice += f.getPrice();
+        }
+        return updatedPrice;
     }
 }

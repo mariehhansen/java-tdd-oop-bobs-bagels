@@ -6,11 +6,12 @@ public class Manager {
 
     }
 
-    public int setCapacity(Basket b, int cap) {
-        return 0;
+    public boolean setCapacity(Basket b, int cap) {
+        return b.setCapacity(cap);
     }
 
     public boolean isInItems(Basket b) {
+        // make a map for inventory, check here
         return false;
     }
 }

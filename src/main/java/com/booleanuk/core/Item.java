@@ -14,18 +14,18 @@ abstract public class Item {
     }
 
     public String getSKU() {
-        return null;
+        return this.SKU;
     }
 
     public float getPrice() {
-        return 0;
+        return this.price;
     }
 
     public String getName() {
-        return null;
+        return this.name;
     }
 
     public String getVariant() {
-        return null;
+        return this.variant;
     }
 }

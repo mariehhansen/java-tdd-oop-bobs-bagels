@@ -17,12 +17,36 @@ public class Basket {
         return items;
     }
 
-    public boolean add(Item item) {
-        return false;
+    public boolean setCapacity(int newCap) {
+        if (newCap < 0 || newCap > 100) {
+            return false;
+        }
+        this.capacity = newCap;
+        return true;
     }
 
-    public boolean remove(String SKU) {
-        return false;
+    public boolean add(Item item) {
+        if (this.isFull()) {
+            return false;
+        }
+        else {
+            if (this.items.containsKey(item)) {
+                int amount = this.items.get(item) + 1;
+                this.items.put(item, amount);
+            }
+            else {
+                this.items.put(item, 1);
+            }
+            return true;
+        }
+    }
+
+    public boolean remove(Item item) {
+        if (!this.items.containsKey(item)) {
+            return false;
+        }
+        this.items.remove(item);
+        return true;
     }
 
     public float getTotalCost() {
@@ -30,19 +54,18 @@ public class Basket {
     }
 
     public int getCapacity() {
-        return 0;
+        return this.capacity - this.items.size();
     }
 
     public int getAvailableCapacity() {
         // available after items are added
         // getCapacity if items-map is empty
         // check this first, make sure Manager does not screw it up
+
         return 0;
     }
 
     public boolean isFull() {
-        return false;
+        return getCapacity() < this.items.size();
     }
-
-
 }
