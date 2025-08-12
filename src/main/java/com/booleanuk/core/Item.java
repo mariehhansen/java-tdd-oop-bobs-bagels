@@ -1,10 +1,10 @@
 package com.booleanuk.core;
 
 abstract public class Item {
-    private String SKU;
-    private float price;
-    private String name;
-    private String variant;
+    private final String SKU;
+    private final float price; // methods for basketPrice for discounts
+    private final String name;
+    private final String variant;
 
     public Item(String SKU, float price, String name, String variant) {
         this.SKU = SKU;
