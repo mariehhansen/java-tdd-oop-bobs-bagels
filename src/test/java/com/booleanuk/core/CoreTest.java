@@ -74,8 +74,9 @@ public class CoreTest {
     public void shouldSetFillings() {
         Customer c = new Customer("Dave");
         Bagel a = new Bagel("A", 20, "Aa", "Ab");
-        a.addFilling(new Filling("F", 20, "Ff", "Fg"));
-        Assertions.assertEquals(List.of(new Filling("F", 20, "Ff", "Fg")), a.getFillingList());
+        Filling f = new Filling("F", 20, "Ff", "Fg");
+        a.addFilling(f);
+        Assertions.assertEquals(List.of(f), a.getFillingList());
     }
 
     // ITEM: Bagel, Coffee, Filling

@@ -50,8 +50,17 @@ public class Basket {
     }
 
     public float getTotalCost() {
-        return 0;
+        float total = 0;
+        for (Item i : this.getItems().keySet()) {
+            if (i instanceof Bagel) {
+                total += ((Bagel) i).getPriceWithFillings();
+            } else {
+                total += i.getPrice();
+            }
+        }
+        return total;
     }
+
 
     public int getCapacity() {
         return this.capacity - this.items.size();

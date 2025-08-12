@@ -9,16 +9,7 @@ public class Customer extends Guest {
     }
 
     public float getTotalPriceBasket() {
-        float total = 0;
-        for (Item i : this.getBasket().getItems().keySet()) {
-            if (i instanceof Bagel) {
-                total += ((Bagel) i).getPriceWithFillings();
-            }
-            else {
-                total += i.getPrice();
-            }
-        }
-        return total;
+        return this.getBasket().getTotalCost();
     }
 
     public float getPriceBagel(Bagel b) {
