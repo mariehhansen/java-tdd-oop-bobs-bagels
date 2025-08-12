@@ -81,6 +81,17 @@ public class CoreTest {
         Assertions.assertEquals(List.of(f, g), a.getFillingList());
     }
 
+    @Test
+    public void shouldGetPriceWithFillings() {
+        Customer c = new Customer("Dave");
+        Bagel a = new Bagel("A", 20, "Aa", "Ab");
+        Filling f = new Filling("F", 20, "Ff", "Fg");
+        Filling g = new Filling("F", 20, "Ff", "Fg");
+        c.getBasket().add(a);
+        c.setFillings(a, List.of(f, g));
+        Assertions.assertEquals(a.getPrice()+f.getPrice()+g.getPrice(), c.getPriceBagel(a));
+    }
+
     // ITEM: Bagel, Coffee, Filling
     @Test
     public void shouldGetSKUItem() {
