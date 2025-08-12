@@ -205,8 +205,10 @@ public class CoreTest {
         Item b = new Bagel("B", 20, "Aa", "Ab");
         Coffee c = new Coffee("C", 30, "Cc", "Cd");
         Filling f = new Filling("F", 10, "Ff", "Fg");
-        bas.add(b); bas.add(c); bas.add(f);
-        Assertions.assertEquals(60, bas.getTotalCost());
+        bas.add(b);
+        bas.add(c);
+        bas.add(f);
+        Assertions.assertEquals(10+1.25f, bas.getTotalCost());
     }
 
     @Test
@@ -217,4 +219,45 @@ public class CoreTest {
         m.setCapacity(bas, 100);
         Assertions.assertEquals(100, bas.getCapacity());
     }
+
+    @Test
+    public void shouldHave12Offer() {
+        Basket b = new Basket(100);
+        for (int i = 0; i < 12; i ++) {
+            Bagel x = new Bagel("a", 0.5f, " ", " ");
+            b.add(x);
+        }
+        Assertions.assertEquals(3.99f, b.getTotalCost());
+    }
+
+    /*
+    // tested initially, but made the methods private only to use in basket.getTotalCost()
+    @Test
+    public void shouldHave6Offer() {
+        Basket b = new Basket(61);
+        for (int i = 0; i < 6; i ++) {
+            Bagel x = new Bagel("a", 0.5f, " ", " ");
+            b.add(x);
+        }
+        Assertions.assertTrue(b.hasBGL6Offer());
+    }
+
+    @Test
+    public void shouldHave12Offer() {
+        Basket b = new Basket(100);
+        for (int i = 0; i < 12; i ++) {
+            Bagel x = new Bagel("a", 0.5f, " ", " ");
+            b.add(x);
+        }
+        Assertions.assertTrue(b.hasBGL12Offer());
+    }
+
+    @Test
+    public void shouldHaveCOFBOffer() {
+        Basket b = new Basket(10);
+        b.add(new Bagel("a", 0.5f, " ", " "));
+        b.add(new Coffee("a", 1.5f, " ", " "));
+        Assertions.assertTrue(b.hasCOFBOffer());
+    }
+     */
 }
