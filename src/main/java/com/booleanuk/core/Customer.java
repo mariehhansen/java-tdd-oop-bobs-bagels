@@ -20,7 +20,16 @@ public class Customer extends Guest {
         return f.getPrice();
     }
 
-    public boolean setFillings(List<Filling> fillingList) {
-        return false;
+    public boolean setFillings(Bagel b, List<Filling> fillingList) {
+        if (this.getBasket().isFull()) {
+            return false;
+        }
+        else if (!this.getBasket().getItems().containsKey(b)) {
+            return false;
+        }
+        for (Filling f : fillingList) {
+            b.addFilling(f);
+        }
+        return true;
     }
 }
